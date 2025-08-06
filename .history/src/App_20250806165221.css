@@ -1,0 +1,136 @@
+/* ==================== GLOBAL ==================== */
+body, html {
+  margin: 0;
+  padding: 0;
+  background-color: #1c1c1c; /* Nền xám đậm toàn bộ web */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.App {
+  text-align: center;
+  color: white;
+}
+
+/* Logo mặc định React (nếu dùng) */
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ==================== NAVBAR ==================== */
+.navbar.bg-transparent {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  transition: background-color 0.3s ease;
+}
+.navbar.bg-dark {
+  background-color: rgba(0, 0, 0, 0.9) !important;
+  transition: background-color 0.3s ease;
+}
+
+.navbar .nav-link {
+  color: #fff !important;
+  transition: color 0.2s;
+}
+.navbar .nav-link:hover {
+  color: #ffc107 !important; /* Màu vàng khi hover */
+}
+
+/* ==================== CAROUSEL ==================== */
+.carousel-container {
+  position: relative;
+}
+
+.carousel-item {
+  position: relative;
+}
+
+.carousel-img {
+  width: 100%;
+  height: 80vh;
+  object-fit: cover;
+}
+
+/* Overlay chữ mờ tỏa tự nhiên */
+.carousel-overlay-bottom-left {
+  position: absolute;
+  bottom: 250px; /* Dịch chữ lên */
+  left: 60px;
+  z-index: 3;
+  max-width: 700px;
+  color: white;
+
+  /* Text nổi bật */
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9);
+
+  /* Mờ tỏa ra xung quanh chữ */
+  background: radial-gradient(
+    circle at left bottom,
+    rgba(0,0,0,0.7) 0%,
+    rgba(0,0,0,0.3) 40%,
+    rgba(0,0,0,0) 80%
+  );
+  padding: 40px 60px 40px 0;
+}
+
+.carousel-overlay-bottom-left h2 {
+  font-size: 3rem;
+  font-weight: 900;
+}
+.carousel-overlay-bottom-left p {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Gradient mờ phía dưới ảnh */
+.carousel-item::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  z-index: 1;
+}
+
+/* Gradient mờ phía dưới carousel */
+.carousel-bottom-fade {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(to top, #1c1c1c, transparent);
+  z-index: 2;
+}
+
+
+/* ==================== DANH SÁCH PHIM ==================== */
+.danh-sach-phim-wrapper {
+  margin-top: -120px; /* Âm để trồi lên một chút */
+  position: relative;
+  z-index: 2;
+}
+
+/* Container trong suốt hoàn toàn */
+.danh-sach-phim-container {
+  background: transparent !important; /* Không nền */
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.danh-sach-phim-container h3 {
+  color: #fff;
+  font-weight: bold;
+}

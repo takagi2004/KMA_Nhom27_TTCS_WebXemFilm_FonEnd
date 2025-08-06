@@ -1,0 +1,134 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  background-color: #1c1c1c;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.App {
+  text-align: center;
+  color: white;
+}
+
+/* ==================== LAYOUT CHUNG ==================== */
+main.container-fluid {
+  padding: 40px;
+  gap: 40px;
+}
+
+section {
+  margin-bottom: 40px;
+}
+
+/* Mobile spacing */
+@media (max-width: 576px) {
+  main.container-fluid {
+    padding: 16px;
+    gap: 24px;
+  }
+  section {
+    margin-bottom: 24px;
+  }
+}
+
+/* ==================== DANH SÁCH PHIM ==================== */
+.phim-card {
+  position: relative;
+  width: 100%;
+  color: white;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: transparent;
+}
+
+.phim-card:hover {
+  transform: scale(1.05);
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+
+.phim-card-img-wrapper {
+  width: 100%;
+  aspect-ratio: 2 / 3.3;
+  overflow: hidden;
+  border-radius: 8px;
+  position: relative;
+}
+
+.phim-card-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.phim-card:hover .phim-card-img-wrapper img {
+  transform: scale(1.05);
+}
+
+.phim-card-episode-badge {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: linear-gradient(to right, #ff8c00, #ffcc00);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+.phim-card-info {
+  margin-top: 8px;
+  min-height: 70px;
+}
+
+.phim-card-info h6 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 3px;
+  white-space: normal;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; 
+  -webkit-box-orient: vertical;
+  line-height: 1.2;
+}
+
+.phim-card-info p {
+  font-size: 0.75rem;
+  margin: 0;
+  color: #aaa;
+  white-space: normal;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-height: 1.2;
+}
+
+/* ==================== BANNER GIỮA ==================== */
+.banner-mid {
+  width: 80%;
+  max-height: 260px;
+  object-fit: cover;
+  border-radius: 16px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  display: block;
+  margin: 30px auto;
+}
+
+.banner-mid:hover {
+  transform: scale(1.02);
+}
+
+@media (max-width: 576px) {
+  .banner-mid {
+    width: 90%;
+    max-height: 140px;
+    margin: 20px auto;
+  }
+}

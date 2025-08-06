@@ -1,0 +1,240 @@
+/* ==================== GLOBAL ==================== */
+body, html {
+  margin: 0;
+  padding: 0;
+  background-color: #1c1c1c;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.App {
+  text-align: center;
+  color: white;
+}
+
+/* ==================== NAVBAR ==================== */
+.navbar.bg-transparent {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  transition: background-color 0.3s ease;
+}
+.navbar.bg-dark {
+  background-color: rgba(0, 0, 0, 0.9) !important;
+  transition: background-color 0.3s ease;
+}
+.navbar .nav-link {
+  color: #fff !important;
+  transition: color 0.2s;
+}
+.navbar .nav-link:hover {
+  color: #ffc107 !important;
+}
+
+/* ==================== CAROUSEL ==================== */
+.carousel-container {
+  position: relative;
+}
+.carousel-item {
+  position: relative;
+}
+.carousel-img {
+  width: 100%;
+  height: 80vh;
+  object-fit: cover;
+}
+
+.carousel-overlay-bottom-left {
+  position: absolute;
+  bottom: 180px;
+  left: 60px;
+  z-index: 3;
+  max-width: 700px;
+  color: white;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9);
+  background: radial-gradient(
+    circle at left bottom,
+    rgba(0,0,0,0.7) 0%,
+    rgba(0,0,0,0.3) 40%,
+    rgba(0,0,0,0) 80%
+  );
+  padding: 40px 60px 40px 0;
+}
+
+.carousel-overlay-bottom-left h2 {
+  font-size: 3rem;
+  font-weight: 900;
+}
+.carousel-overlay-bottom-left p {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Gradient mờ desktop */
+.carousel-item::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  z-index: 1;
+}
+
+.carousel-bottom-fade {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(to top, #1c1c1c, transparent);
+  z-index: 2;
+}
+
+/* ==================== DANH SÁCH PHIM ==================== */
+.danh-sach-phim-wrapper {
+  margin-top: -120px;
+  position: relative;
+  z-index: 2;
+}
+
+.danh-sach-phim-container {
+  background: transparent !important;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.danh-sach-phim-container h3 {
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Card phim đồng đều và ngắn hơn */
+.phim-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 2.8; /* Ngắn hơn để cân đối */
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: transparent;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.phim-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.phim-card-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
+  color: white;
+  padding: 8px;
+  box-sizing: border-box;
+}
+.phim-card-overlay h6 {
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.phim-card-overlay p {
+  font-size: 0.7rem;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.phim-card:hover {
+  transform: scale(1.05);
+  z-index: 10;
+}
+
+/* ==================== RESPONSIVE ==================== */
+
+/* Tablet giữ nguyên logic cũ */
+@media (max-width: 992px) {
+  .carousel-img {
+    height: 60vh;
+  }
+  .carousel-overlay-bottom-left {
+    bottom: 80px;
+    left: 30px;
+    max-width: 500px;
+    padding: 20px 30px 20px 0;
+  }
+  .carousel-overlay-bottom-left h2 {
+    font-size: 2rem;
+  }
+}
+
+/* Mobile chỉnh sửa */
+@media (max-width: 576px) {
+  .carousel-img {
+    height: 40vh;
+  }
+
+  /* Ẩn overlay desktop */
+  .carousel-overlay-bottom-left {
+    display: none;
+  }
+
+  /* Ẩn gradient */
+  .carousel-item::after,
+  .carousel-bottom-fade {
+    display: none;
+  }
+
+  /* Info mobile hiển thị dưới ảnh */
+  .carousel-mobile-info {
+    padding: 10px 12px;
+    text-align: center;
+  }
+  .carousel-mobile-info h2 {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 3px;
+  }
+  .carousel-mobile-info .badge {
+    font-size: 0.6rem;
+    padding: 2px 5px;
+    margin: 0 2px;
+  }
+  .carousel-mobile-info .rating {
+    color: #ffc107;
+    font-weight: bold;
+    font-size: 0.8rem;
+    margin-bottom: 3px;
+    display: block;
+  }
+  .carousel-mobile-info .meta {
+    font-size: 0.65rem;
+    color: #aaa;
+    margin-bottom: 4px;
+  }
+  .carousel-mobile-info button {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    margin: 2px;
+  }
+
+  /* Danh sách phim không trồi lên */
+  .danh-sach-phim-wrapper {
+    margin-top: 0;
+  }
+
+  /* Card phim nhỏ hơn */
+  .phim-card {
+    aspect-ratio: 2/2.8;
+  }
+  .phim-card-overlay h6 {
+    font-size: 0.7rem;
+  }
+  .phim-card-overlay p {
+    font-size: 0.6rem;
+  }
+}

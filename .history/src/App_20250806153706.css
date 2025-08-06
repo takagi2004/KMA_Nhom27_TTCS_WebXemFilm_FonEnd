@@ -1,0 +1,150 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* css chỗ narbar-hender,fooder */
+/* Chiều cao 100% cho carousel */
+#introCarousel,
+.carousel-inner,
+.carousel-item,
+.carousel-item.active {
+  height: 100vh;
+}
+
+/* Ảnh nền cho 3 slide */
+.carousel-item:nth-child(1) {
+  background-image: url("https://mdbootstrap.com/img/Photos/Others/images/76.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+.carousel-item:nth-child(2) {
+  background-image: url("https://mdbootstrap.com/img/Photos/Others/images/77.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+.carousel-item:nth-child(3) {
+  background-image: url("https://mdbootstrap.com/img/Photos/Others/images/78.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+/* Cho màn hình lớn */
+@media (min-width: 992px) {
+  #introCarousel {
+    margin-top: -58.59px;
+  }
+}
+
+/* Chữ trắng cho navbar */
+.navbar .nav-link {
+  color: #fff !important;
+}
+
+/* css chỗ narbar-hender,fooder Đóng */
+/* Carousel.css */
+.carousel-item {
+  position: relative; /* Để overlay tuyệt đối */
+}
+
+.carousel-img {
+  object-fit: cover;
+  height: 600px;
+  width: 100%;
+  display: block;
+}
+
+/* Overlay chữ góc dưới bên trái */
+.carousel-overlay-bottom-left {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  color: white;
+  z-index: 2;
+  max-width: 500px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+
+  /* Không chiếm layout, luôn nằm trên ảnh */
+  pointer-events: none;
+}
+
+.carousel-overlay-bottom-left h2,
+.carousel-overlay-bottom-left p,
+.carousel-overlay-bottom-left button {
+  pointer-events: auto; /* Cho phép click nút */
+}
+
+/* Gradient mờ phía dưới ảnh */
+.carousel-item::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  z-index: 1;
+  pointer-events: none;
+}
+
+
+
+/* ---------Navbar.css---------- */
+/* Navbar trong suốt ban đầu */
+.navbar.bg-transparent {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  transition: background-color 0.3s ease;
+}
+
+/* Navbar hiện rõ khi scroll */
+.navbar.bg-dark {
+  background-color: rgba(0, 0, 0, 0.9) !important;
+  transition: background-color 0.3s ease;
+}
+
+/* Hiệu ứng hover cho link */
+.nav-link {
+  color: white !important;
+  transition: color 0.2s;
+}
+.nav-link:hover {
+  color: #ffc107 !important; /* Màu vàng */
+}

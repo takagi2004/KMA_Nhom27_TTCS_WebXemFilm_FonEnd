@@ -1,0 +1,3 @@
+class phimModel{
+    idPhim : number
+}

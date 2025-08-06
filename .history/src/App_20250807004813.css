@@ -1,0 +1,304 @@
+/* ==================== GLOBAL ==================== */
+body, html {
+  margin: 0;
+  padding: 0;
+  background-color: #1c1c1c;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.App {
+  text-align: center;
+  color: white;
+}
+
+/* ==================== NAVBAR ==================== */
+.navbar.bg-transparent {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  transition: background-color 0.3s ease;
+}
+.navbar.bg-dark {
+  background-color: rgba(0, 0, 0, 0.9) !important;
+  transition: background-color 0.3s ease;
+}
+.navbar .nav-link {
+  color: #fff !important;
+  transition: color 0.2s;
+}
+.navbar .nav-link:hover {
+  color: #ffc107 !important;
+}
+
+/* ==================== CAROUSEL ==================== */
+.carousel-container {
+  position: relative;
+}
+/* ✅ đảm bảo ::after hoạt động đúng */
+.carousel-item {
+  position: relative;
+  overflow: hidden; /* ✅ tránh bị che bởi ảnh lớn hơn */
+}
+.carousel-img {
+  width: 100%;
+  height: 80vh;
+  object-fit: cover;
+  position: relative;
+  z-index: 0;
+}
+
+/* Overlay desktop */
+.carousel-overlay-bottom-left {
+  position: absolute;
+  bottom: 160px;
+  left: 60px;
+  z-index: 2;
+  max-width: 700px;
+  color: white;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9);
+  background: radial-gradient(
+    circle at left bottom,
+    rgba(0,0,0,0.7) 0%,
+    rgba(0,0,0,0.3) 40%,
+    rgba(0,0,0,0) 80%
+  );
+  padding: 40px 60px 40px 0;
+}
+
+.carousel-overlay-bottom-left h2 {
+  font-size: 3rem;
+  font-weight: 900;
+}
+.carousel-overlay-bottom-left p {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Gradient mờ desktop */
+.carousel-item::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40%; /* ⬆️ mờ từ dưới lên khoảng 2/5 ảnh */
+  background: linear-gradient(
+    to top,
+    #1c1c1c 0%,         /* Đậm nhất ở đáy */
+    rgba(28,28,28,0.7) 35%,
+    rgba(28,28,28,0) 100%
+  );
+  z-index: 2; /*  cao hơn ảnh, dưới overlay */
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+
+/*  THÊM MỚI: Hiệu ứng transition cho blur & gradient khi đổi slide */
+.carousel-item::before,
+.carousel-item::after {
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.carousel-item.active::before,
+.carousel-item.active::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+/*  THÊM MỚI: Zoom nhẹ ảnh khi slide active */
+.carousel-fade .carousel-item {
+  transition: opacity 0.8s ease;
+}
+
+/*  THÊM MỚI: Carousel fade + zoom nhẹ khi chuyển slide */
+.carousel-fade .carousel-item {
+  transition: opacity 0.8s ease;
+}
+.carousel-fade .carousel-item img {
+  transition: transform 1s ease;
+}
+.carousel-fade .carousel-item.active img {
+  transform: scale(1.02);
+}
+
+/* ✅ THÊM MỚI: Hiệu ứng mờ từ trên xuống dưới dưới Carousel */
+.carousel-item::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40%; /* ⬆️ Đổi từ 30% lên 40% (≈2/5 ảnh) */
+  background: linear-gradient(
+    to top,
+    #1c1c1c 0%,         /* Dưới cùng: màu nền */
+    rgba(28,28,28,0.7) 35%, /* ⬆️ Màu mờ hơn một chút */
+    rgba(28,28,28,0) 100%   /* Trên cùng: trong suốt */
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Mobile không cần fade */
+@media (max-width: 576px) {
+  .carousel-item::after {
+    display: none;
+  }
+}
+
+
+
+
+
+/* ==================== DANH SÁCH PHIM ==================== */
+.danh-sach-phim-wrapper {
+  margin-top: -120px;  /* PC trồi nhiều */
+  position: relative;
+  z-index: 2;
+}
+
+.danh-sach-phim-container {
+  background: transparent !important;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.danh-sach-phim-container h3 {
+  color: #fff;
+  font-weight: bold;
+}
+
+/* ==================== PHIM CARD ==================== */
+.phim-card {
+  position: relative;
+  width: 100%;
+  color: white;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: transparent;
+  min-height: 250px; /* Đảm bảo không bị cắt phần mô tả */
+}
+
+.phim-card-img-wrapper {
+  width: 100%;
+  aspect-ratio: 2 / 3.3;
+  overflow: hidden;
+  border-radius: 8px;
+  position: relative;
+}
+
+.phim-card-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.phim-card:hover .phim-card-img-wrapper img {
+  transform: scale(1.05);
+}
+
+/* Badge số tập */
+.phim-card-episode-badge {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: linear-gradient(to right, #ff8c00, #ffcc00);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+.phim-card-info {
+  margin-top: 8px;
+  min-height: 70px; /* Đảm bảo luôn có chỗ cho tên + mô tả */
+}
+
+.phim-card-info h6 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 3px;
+  white-space: normal;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; 
+  -webkit-box-orient: vertical;
+  line-height: 1.2;
+}
+
+.phim-card-info p {
+  font-size: 0.75rem;
+  margin: 0;
+  color: #aaa;
+  white-space: normal;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-height: 1.2;
+}
+
+/* Hover */
+.phim-card:hover {
+  transform: scale(1.07);
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+
+/* ==================== RESPONSIVE ==================== */
+
+/* Tablet */
+@media (max-width: 992px) {
+  .carousel-img {
+    height: 60vh;
+  }
+  .carousel-overlay-bottom-left {
+    bottom: 80px;
+    left: 30px;
+    max-width: 500px;
+    padding: 20px 30px 20px 0;
+  }
+  .carousel-overlay-bottom-left h2 {
+    font-size: 2rem;
+  }
+  .danh-sach-phim-wrapper {
+    margin-top: -40px; /* Tablet trồi ít hơn */
+  }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .carousel-img {
+    height: 40vh;
+  }
+
+  /* Ẩn overlay desktop */
+  .carousel-overlay-bottom-left {
+    display: none;
+  }
+
+  /* Ẩn gradient */
+  .carousel-item::after {
+    display: none;
+  }
+
+  /* Card phim nhỏ hơn */
+  .phim-card-img-wrapper {
+    aspect-ratio: 2 / 3;
+  }
+  .phim-card-info h6 {
+    font-size: 0.8rem;
+  }
+  .phim-card-info p {
+    font-size: 0.65rem;
+  }
+
+  /* Mobile: không trồi lên để tránh che chữ */
+  .danh-sach-phim-wrapper {
+    margin-top: 0;
+  }
+}
