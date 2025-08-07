@@ -1,0 +1,208 @@
+// ChiTietPhim.tsx
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import PhimModel from "../../model/PhimModel";
+import { PhimAPI } from "../../api/PhimAPI";
+import VideoAPI from "../../api/VideoAPI";
+import DanhGiaModel from "../../model/DanhGiaModel";
+import DeXuatFilm from "./DeXuatFilm";
+
+const ChiTietPhim: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const [phim, setPhim] = useState<PhimModel | null>(null);
+  const [tapDangChon, setTapDangChon] = useState<number | null>(null);
+  const [binhLuanMoi, setBinhLuanMoi] = useState<string>("");
+  const [soSaoMoi, setSoSaoMoi] = useState<number>(5);
+  const [moTaDayDu, setMoTaDayDu] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (id) {
+      const fetchData = async () => {
+        const data = await PhimAPI.getPhimById(Number(id));
+        setPhim(data);
+        if (Array.isArray(data.tapPhim) && data.tapPhim.length > 0) {
+          setTapDangChon(data.tapPhim[0].soTap);
+        }
+      };
+
+      fetchData();
+    }
+  }, [id]);
+
+  if (!phim) return <div className="text-light text-center mt-5">Đang tải...</div>;
+
+  const tapHienTai = phim.tapPhim?.find((tap) => tap.soTap === tapDangChon);
+
+  const handleGuiBinhLuan = (e: React.FormEvent) => {
+    e.preventDefault();
+    const danhGiaMoi: DanhGiaModel = {
+      soSao: soSaoMoi,
+      binhLuan: binhLuanMoi,
+      nguoiDanhGia: "Khách",
+      ngayBinhLuan: new Date().toISOString(),
+    };
+
+    setPhim((prev) =>
+      prev ? { ...prev, danhGia: [danhGiaMoi, ...(prev.danhGia || [])] } : prev
+    );
+
+    setBinhLuanMoi("");
+    setSoSaoMoi(5);
+  };
+
+  return (
+    <div className="container text-light mt-5 pt-4">
+      <div className="row">
+        {/* LEFT */}
+        <div className="col-lg-8 mb-5">
+          <h2 className="text-warning mb-3">{phim.tenPhim}</h2>
+
+          {/* Video */}
+          {tapHienTai ? (
+            <video
+              key={tapHienTai.soTap}
+              src={VideoAPI.getVideoUrl(tapHienTai.video)}
+              controls
+              className="w-100 mb-3"
+              style={{ maxHeight: "500px", borderRadius: "12px" }}
+            />
+          ) : (
+            <div className="text-muted">Không có video.</div>
+          )}
+
+          {/* Tập phim horizontal */}
+          {phim.tapPhim?.length > 0 && (
+            <div className="overflow-auto d-flex gap-2 py-2 mb-4 px-1" style={{ whiteSpace: "nowrap" }}>
+              {phim.tapPhim.map((tap) => (
+                <button
+                  key={tap.soTap}
+                  className={`btn btn-sm px-3 py-2 ${
+                    tap.soTap === tapDangChon ? "btn-warning" : "btn-outline-light"
+                  }`}
+                  onClick={() => setTapDangChon(tap.soTap)}
+                >
+                  Tập {tap.soTap}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Mô tả */}
+          <div className="mb-5">
+            <h5 className="mb-3">Giới thiệu</h5>
+            <div
+              className="position-relative bg-dark p-3 rounded border border-secondary"
+              style={{
+                maxHeight: moTaDayDu ? "none" : "6em",
+                overflow: "hidden",
+                WebkitLineClamp: 3,
+                display: "-webkit-box",
+                WebkitBoxOrient: "vertical",
+                transition: "max-height 0.3s ease-in-out",
+              }}
+            >
+              {phim.moTa}
+              {!moTaDayDu && phim.moTa && phim.moTa.length > 300 && (
+                <div
+                  className="position-absolute bottom-0 start-0 end-0 text-end pe-2 pb-1"
+                  style={{ background: "linear-gradient(to top, #1c1c1c, transparent)" }}
+                >
+                  <span className="text-muted">...</span>
+                </div>
+              )}
+            </div>
+
+            {phim.moTa && phim.moTa.length > 300 && (
+              <button
+                className="btn btn-link btn-sm text-warning mt-2 p-0"
+                onClick={() => setMoTaDayDu(!moTaDayDu)}
+              >
+                {moTaDayDu ? "Thu gọn ▲" : "Xem thêm ▼"}
+              </button>
+            )}
+
+            <div className="mt-3 d-flex flex-wrap gap-3 text-light small">
+              <div><strong>Năm:</strong> {phim.namPhatHanh}</div>
+              <div><strong>Quốc gia:</strong> {phim.quocGia}</div>
+              {phim.theLoai?.length > 0 && (
+                <div><strong>Thể loại:</strong> {phim.theLoai.join(", ")}</div>
+              )}
+            </div>
+          </div>
+
+          {/* Bình luận */}
+          <div className="mb-5">
+            <h5>Bình luận ({phim.danhGia?.length || 0})</h5>
+            <form className="mb-3" onSubmit={handleGuiBinhLuan}>
+              <div className="mb-2">
+                <textarea
+                  className="form-control"
+                  rows={3}
+                  placeholder="Viết bình luận của bạn..."
+                  value={binhLuanMoi}
+                  onChange={(e) => setBinhLuanMoi(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-2 d-flex align-items-center gap-2">
+                <label className="me-2 mb-0">Số sao:</label>
+                <select
+                  value={soSaoMoi}
+                  onChange={(e) => setSoSaoMoi(Number(e.target.value))}
+                  className="form-select w-auto"
+                >
+                  {[5, 4, 3, 2, 1].map((s) => (
+                    <option key={s} value={s}>{s}</option>
+                  ))}
+                </select>
+              </div>
+              <button className="btn btn-primary btn-sm">Gửi đánh giá</button>
+            </form>
+
+            {phim.danhGia?.length ? (
+              <div className="list-group">
+                {phim.danhGia.map((dg, index) => (
+                  <div key={index} className="list-group-item bg-dark text-light border-secondary mb-2">
+                    <div className="d-flex justify-content-between">
+                      <strong>{dg.nguoiDanhGia}</strong>
+                      <span className="text-warning">⭐ {dg.soSao}/5</span>
+                    </div>
+                    <div>{dg.binhLuan}</div>
+                    <small className="text-muted">
+                      {new Date(dg.ngayBinhLuan).toLocaleString("vi-VN")}
+                    </small>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-muted">Chưa có đánh giá nào.</div>
+            )}
+          </div>
+
+          {/* Đề xuất phim */}
+          <DeXuatFilm currentPhimId={phim.idPhim} title="Phim đề xuất" />
+        </div>
+
+        {/* RIGHT (ẩn trên mobile) */}
+        <div className="col-lg-4 d-none d-lg-block">
+          <div className="bg-dark p-3 rounded border border-secondary">
+            <h5 className="mb-3 text-warning">Tập phim</h5>
+            {phim.tapPhim?.map((tap) => (
+              <button
+                key={tap.soTap}
+                className={`btn btn-sm mb-2 w-100 text-start ${
+                  tap.soTap === tapDangChon ? "btn-warning" : "btn-outline-light"
+                }`}
+                onClick={() => setTapDangChon(tap.soTap)}
+              >
+                Tập {tap.soTap}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ChiTietPhim;
